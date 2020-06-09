@@ -48,6 +48,8 @@ glomp - glomps a user
 
 lick - licks a user
 
+kiss - kisses a user
+
 slap - slaps a user with a wet trout
 
 nuzzle - nuzzles a user
