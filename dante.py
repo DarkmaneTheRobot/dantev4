@@ -1,5 +1,6 @@
 import discord
 import importlib
+import mysql.connector
 
 from discord.ext import commands
 
@@ -8,13 +9,29 @@ class MyClient(discord.Client):
         print('Logged on as {0}!'.format(self.user))
 
     async def on_message(self, message):
+        db = mysql.connector.connect(
+        host="host",
+        user="user",
+        passwd="",
+        database = "dante"
+        )
 
-        prefix = "!"
+        mycursor = db.cursor()
+        mycursor.execute("SELECT * FROM guilds WHERE guildid =" + str(message.guild.id))
+        myresult = mycursor.fetchall()
+
+        prefix = ""
+
+        if not myresult:
+            prefix = "!"
+        for x in myresult:
+            prefix = str(x[1])
+
         message.content = message.content.lower()
         mentions = message.mentions
         if len(mentions) > 3:
             if not message.author.bot:
-                if message.content.startswith("!"):
+                if message.content.startswith(prefix):
                     await message.delete()
                     await message.channel.send("<@" + str(message.author.id) + "> Too many mentions!")
                     return
@@ -30,9 +47,11 @@ class MyClient(discord.Client):
         await food.msg(str(message.content), message, prefix, self)
         nsfw = __import__("nsfw")
         await nsfw.msg(str(message.content), message, prefix, self)
+        casino = __import__("casino")
+        await casino.msg(str(message.content), message, prefix, self)
         if not message.author.bot:
             if message.content.startswith("!"):
                 await message.delete()
 
 client = MyClient()
-client.run('YourTokenHere')
+client.run('YourToken')
