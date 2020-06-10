@@ -82,11 +82,17 @@ blep - do a blep
 
 rawr - RAWR X3
 
+owo - shows how many times you have said "OwO" in a message
+
 ## Christmas
 
 snowball - Works all year round - Throw a snowball at people.
 
 advent - Works from 1st dec to 25th dec - Get a chocolate piece from the advent calander
+
+## Casino
+
+bal - shows balance
 
 ## Room Service
 
