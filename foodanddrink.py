@@ -8,7 +8,7 @@ async def msg(message, x, p, self):
         return
 
     cmd = message.split()
-    validcommands = ["!menu", "!cookie", "!pineapple", "!sandwich", "!steak", "!pizza", "!muffin", "!whiskey", "!vodka", "!martini", "!beer", "!rum", "!pinacolada", "!coke", "!tea", "!coffee"]
+    validcommands = [p+ "menu", p+ "cookie", p+ "pineapple", p+ "sandwich", p+ "steak", p+ "pizza", p+ "muffin", p+ "whiskey", p+ "vodka", p+ "martini", p+ "beer", p+ "rum", p+ "pinacolada", p+ "coke", p+ "tea", p+ "coffee"]
 
     if not cmd[0].lower() in validcommands:
         return
