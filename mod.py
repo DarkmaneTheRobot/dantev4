@@ -12,7 +12,7 @@ async def msg(message, x, p, self):
         return
 
     cmd = message.split()
-    validcommands = ["!hackban", "!ban", "!kick", "!mute", "!warn", "!clear"]
+    validcommands = [p + "hackban", p + "ban", p + "kick", p + "mute", p + "warn", p+ "clear"]
 
     if not cmd[0].lower() in validcommands:
         return
