@@ -10,7 +10,7 @@ async def msg(message, x, p, self):
         return
     #If not, we can execute commands, such as this simple ping!
     cmd = message.split()
-    validcommands = ["!snowball", "!advent"]
+    validcommands = [p+ "snowball", p+ "advent"]
 
     if not cmd[0].lower() in validcommands:
         return
