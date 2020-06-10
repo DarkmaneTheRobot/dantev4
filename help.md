@@ -30,6 +30,8 @@ mute - mutes a user
 
 warn - warns a user
 
+prefix - changes bot prefix
+
 clear (x) - clears a channel of (x) messages - EG: !clear 50
 
 ## Fun
