@@ -1,6 +1,7 @@
 import discord
 from datetime import datetime
 from discord.utils import get
+import mysql.connector
 async def msg(message, x, p, self):
     msg = x
     #Check if the message was sent by ourselves:
@@ -10,10 +11,39 @@ async def msg(message, x, p, self):
     #If not, we can execute commands, such as this simple ping!
 
     cmd = message.split()
-    validcommands = ["!info", "!help", "!invite", "!s", "!u"]
+    validcommands = [p+ "info", p+ "help", p+ "invite", p+ "s", p+ "u", p+"prefix"]
 
     if not cmd[0].lower() in validcommands:
         return
+
+    #Connect to database
+    db = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  passwd="",
+  database = "dante"
+)
+
+    if message.startswith(p + "prefix"):
+        if not msg.guild.owner_id == msg.author.id:
+            embed = discord.Embed(title = "No Permission!", description = "You do not have permission to change the prefix in " + str(msg.guild.name) , color=0x00ff00)
+            embed.set_thumbnail(url = "https://freeiconshop.com/wp-content/uploads/edd/cross-flat.png")
+            await msg.author.send(embed = embed)
+            return
+        try:
+            sql = "INSERT INTO guilds (guildid, prefix) VALUES (%s, %s)"
+            val = (msg.guild.id, str(cmd[1]))
+            mycursor = db.cursor()
+            mycursor.execute(sql, val)
+            db.commit()
+            print(mycursor.rowcount, "record inserted.")
+        except:
+            sql = "UPDATE guilds SET prefix = %s WHERE guildid = %s"
+            val = (str(cmd[1]), msg.guild.id)
+            mycursor = db.cursor()
+            mycursor.execute(sql, val)
+            db.commit()
+            print(mycursor.rowcount, "record updated")
 
     if message == p + "info":
         embed = discord.Embed(title = "Info", description = 'Made by: Darkmane Arweinyd \nWith help by: Alex Malebogh \n\nBeta testers: Kyrpto the superdog, Tyler Furrison, Alex Malebogh, Jessa, The Floof Hotel Staff Team & Users\n\nPing: ___Took {0}'.format(round(self.latency, 1)) + "ms___" , color=0x00ff00)
